@@ -1,8 +1,10 @@
 package com.algorithms.prime.service;
 
+import java.util.List;
+
 public interface PrimeService {
 
-    long countPrimesEratosthenes(int n);
-    long countPrimesLinear(int n);
+    List<Integer> getPrimesEratosthenes(int n);
+    List<Integer> getPrimesLinear(int n);
 }
 
