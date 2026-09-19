@@ -63,4 +63,3 @@ public class PrimeServiceImpl implements PrimeService {
                 String.format("Input %d exceeds maximum allowed limit of %d.", n, MAX_N));
     }
 }
-

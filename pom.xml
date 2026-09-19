@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.algorithms</groupId>
-	<artifactId>prime</artifactId>
+	<artifactId>prime-number-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
+	<name>Prime Number Service</name>
+	<description>A Spring Boot microservice for calculating prime numbers efficiently.</description>
 	<url/>
 	<licenses>
 		<license/>
