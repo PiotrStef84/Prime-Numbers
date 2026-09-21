@@ -73,6 +73,18 @@ class PrimeServiceImplTest {
                 .containsExactly(2, 3, 5, 7);
     }
 
+    @Test
+    void linear_shouldReturnEmpty_forN2() {
+        assertThat(primeService.getPrimesLinear(2))
+                .containsExactly(2);
+    }
+
+    @Test
+    void linear_shouldThrow_whenNIsNegative() {
+        assertThatThrownBy(() -> primeService.getPrimesLinear(-1))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {0, 1})
     void linear_shouldReturnEmpty_whenNLessThan2(int n) {

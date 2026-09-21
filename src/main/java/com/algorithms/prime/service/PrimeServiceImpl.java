@@ -13,7 +13,7 @@ public class PrimeServiceImpl implements PrimeService {
     private static final int MAX_N = 5_000_000;
 
     @Override
-    @Cacheable(value = "primes", key = "#n")
+    @Cacheable(value = "primesEratosthenes", key = "#n")
     public List<Integer> getPrimesEratosthenes(int n) {
         validateInput(n);
         if (n < 2) {
@@ -44,7 +44,7 @@ public class PrimeServiceImpl implements PrimeService {
     }
 
     @Override
-    @Cacheable(value = "primes", key = "#n + '_linear'")
+    @Cacheable(value = "primesLinear", key = "#n")
     public List<Integer> getPrimesLinear(int n) {
         validateInput(n);
         if (n < 2) {
