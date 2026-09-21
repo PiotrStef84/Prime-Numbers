@@ -1,6 +1,8 @@
 package com.algorithms.prime.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -23,6 +25,8 @@ public class PrimeResponse {
 
     @Schema(description = "List of all prime numbers up to and including N", example = "[2, 3, 5, 7]")
     @JsonProperty("Primes")
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "Primes")
     private List<Integer> primes;
 }
 

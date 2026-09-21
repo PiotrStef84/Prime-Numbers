@@ -140,5 +140,20 @@ class PrimeControllerTest {
                         .with(httpBasic(TEST_USER, TEST_PASSWORD)))
                 .andExpect(status().isBadRequest());
     }
+
+    // XML content negotiation
+    @Test
+    void getPrimes_shouldReturnXml_whenAcceptHeaderIsXml() throws Exception {
+        mockMvc.perform(get("/api/v1/primes/10")
+                        .with(httpBasic(TEST_USER, TEST_PASSWORD))
+                        .accept(MediaType.APPLICATION_XML))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_XML))
+                .andExpect(xpath("/PrimeResponse/Initial").string("10"))
+                .andExpect(xpath("/PrimeResponse/Primes[1]").string("2"))
+                .andExpect(xpath("/PrimeResponse/Primes[2]").string("3"))
+                .andExpect(xpath("/PrimeResponse/Primes[3]").string("5"))
+                .andExpect(xpath("/PrimeResponse/Primes[4]").string("7"));
+    }
 }
 
