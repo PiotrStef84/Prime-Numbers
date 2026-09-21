@@ -72,6 +72,8 @@ public class PrimeController {
             )
             @RequestParam(defaultValue = "eratosthenes") String algorithm) {
 
+        log.info("Received request: n={}, algorithm={}", n, algorithm);
+
         var primes = switch (algorithm.toLowerCase()) {
             case ALGORITHM_LINEAR -> primeService.getPrimesLinear(n);
             case ALGORITHM_ERATOSTHENES -> primeService.getPrimesEratosthenes(n);
@@ -79,6 +81,8 @@ public class PrimeController {
                     String.format("Unknown algorithm: '%s'. Supported: %s, %s",
                             algorithm, ALGORITHM_ERATOSTHENES, ALGORITHM_LINEAR));
         };
+
+        log.debug("Returning {} primes for n={}", primes.size(), n);
 
         return ResponseEntity.ok(PrimeResponse.builder()
                 .initial(n)

@@ -16,7 +16,13 @@ public class PrimeServiceImpl implements PrimeService {
     @Cacheable(value = "primes", key = "#n")
     public List<Integer> getPrimesEratosthenes(int n) {
         validateInput(n);
-        if (n < 2) return List.of();
+        if (n < 2) {
+            log.debug("n={} is less than 2, returning empty list", n);
+            return List.of();
+        }
+
+        log.info("Computing Eratosthenes sieve for n={}", n);
+        long start = System.currentTimeMillis();
 
         boolean[] isComposite = new boolean[n + 1];
         for (int p = 2; (long) p * p <= n; p++) {
@@ -31,6 +37,9 @@ public class PrimeServiceImpl implements PrimeService {
         for (int i = 2; i <= n; i++) {
             if (!isComposite[i]) primes.add(i);
         }
+
+        log.info("Eratosthenes completed for n={} — found {} primes in {}ms",
+                n, primes.size(), System.currentTimeMillis() - start);
         return primes;
     }
 
@@ -38,7 +47,13 @@ public class PrimeServiceImpl implements PrimeService {
     @Cacheable(value = "primes", key = "#n + '_linear'")
     public List<Integer> getPrimesLinear(int n) {
         validateInput(n);
-        if (n < 2) return List.of();
+        if (n < 2) {
+            log.debug("n={} is less than 2, returning empty list", n);
+            return List.of();
+        }
+
+        log.info("Computing Linear sieve for n={}", n);
+        long start = System.currentTimeMillis();
 
         int[] minPrime = new int[n + 1];
         List<Integer> primes = new ArrayList<>();
@@ -54,12 +69,21 @@ public class PrimeServiceImpl implements PrimeService {
                 if (i % p == 0) break;
             }
         }
+
+        log.info("Linear sieve completed for n={} — found {} primes in {}ms",
+                n, primes.size(), System.currentTimeMillis() - start);
         return primes;
     }
 
     private void validateInput(int n) {
-        if (n < 0) throw new IllegalArgumentException("Input must be a non-negative integer.");
-        if (n > MAX_N) throw new IllegalArgumentException(
-                String.format("Input %d exceeds maximum allowed limit of %d.", n, MAX_N));
+        if (n < 0) {
+            log.warn("Rejected negative input: n={}", n);
+            throw new IllegalArgumentException("Input must be a non-negative integer.");
+        }
+        if (n > MAX_N) {
+            log.warn("Rejected oversized input: n={} exceeds MAX_N={}", n, MAX_N);
+            throw new IllegalArgumentException(
+                    String.format("Input %d exceeds maximum allowed limit of %d.", n, MAX_N));
+        }
     }
 }
